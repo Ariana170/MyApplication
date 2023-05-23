@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         if (songsList.size() == 0){
             noMusicTextView.setVisibility(View.VISIBLE);
         }else{
+            //recyclerView
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(new MusicListAdapter(songsList, getApplicationContext()));
         }
@@ -84,5 +85,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(recyclerView!=null)
+            recyclerView.setAdapter(new MusicListAdapter(songsList,getApplicationContext()));
+    }
 }

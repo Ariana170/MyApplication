@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
-public class ModelAudio {
+import java.io.Serializable;
+
+public class ModelAudio implements Serializable {
     String path;
     String title;
     String duration;
