@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileC"
+    android:background="#C9D9F0">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/log"
+        android:text="Sign In"
+        android:textSize="30dp"
+        android:textColor="#8155BA"
+        android:layout_centerHorizontal="true"
+        android:padding="20dp"
+        />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/log"
+        android:id="@+id/username"
+        android:layout_marginHorizontal="30dp"
+        android:drawableLeft="@drawable/baseline_person_outline_24"
+        android:hint="Username"
+        android:textColorHint="#8155BA"
+        android:background="#30ffffff"
+        android:drawablePadding="20dp"
+        android:layout_marginTop="40dp"
+        android:padding="20dp"
+        android:textSize="20sp"
+        android:inputType="text"
+        />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username"
+        android:layout_marginHorizontal="30dp"
+        android:id="@+id/password"
+        android:drawableLeft="@drawable/baseline_lock_24"
+        android:hint="Password"
+        android:padding="20dp"
+        android:textColorHint="#8155BA"
+        android:background="#30ffffff"
+        android:drawablePadding="20dp"
+
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_below="@id/password"
+        android:padding="20dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/button"
+        android:onClick="login"
+        android:layout_marginTop="20dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You don't have an account? Create one!"
+        android:layout_below="@+id/button"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log In using Google:"
+        android:textSize="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/google"
+        android:padding="20dp"
+        />
+
+
+    <Button
+        android:layout_height="50dp"
+        android:layout_width="50dp"
+        android:id="@+id/google"
+        android:background="@drawable/googletiny"
+        android:layout_above="@id/bottomNavView"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:text="."
+        />
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:id="@+id/bottomNavView"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav_menu">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+</RelativeLayout>

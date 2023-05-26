@@ -3,10 +3,14 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,7 +18,11 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
+
+import com.example.myapplication.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -24,11 +32,18 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView noMusicTextView;
     ArrayList<ModelAudio> songsList = new ArrayList<>();
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavView);
+        bottomNavigationView.setSelectedItemId(R.id.home);
+
 
         recyclerView = findViewById(R.id.recycler_view);
         noMusicTextView = findViewById(R.id.no_songs_text);
@@ -37,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             requestPermission();
             return;
         }
+
 
         String[] projection = {
                 MediaStore.Audio.Media.TITLE,
@@ -62,7 +78,35 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setAdapter(new MusicListAdapter(songsList, getApplicationContext()));
         }
 
+        bottomNavigationView.setOnItemSelectedListener(item ->{
+            switch (item.getItemId()){
+                case R.id.home:
+                    return true;
+                case R.id.profile:
+                    startActivity(new Intent(getApplicationContext(), ProfileC.class));
+                    overridePendingTransition(R.anim.slide_in_from_right,R.anim.slide_out_from_right);
+                    finish();
+                    return true;
+                case R.id.mVideos:
+                    startActivity(new Intent(getApplicationContext(),Music_Videos.class));
+                    overridePendingTransition(R.anim.slide_in_from_right,R.anim.slide_out_from_right);
+                    finish();
+                    return true;
+            }
+            return false;
+        });
+
+
     }
+
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame,fragment);
+        fragmentTransaction.commit();
+    }
+
+
 
     boolean checkPermission(){
         int result = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest
@@ -85,6 +129,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    public void logout(View view){
+        SessionManagement sessionManagement = new SessionManagement(MainActivity.this);
+        sessionManagement.removeSession();
+
+        moveToLogin();
+    }
+
+    private void moveToLogin(){
+        Intent intent = new Intent(MainActivity.this, ProfileC.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+
+
     @Override
     protected void onResume(){
         super.onResume();

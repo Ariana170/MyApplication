@@ -3,11 +3,13 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ public class MusicPlayerActivity extends AppCompatActivity {
     TextView title, currentTime, totalTime;
     SeekBar seekBar;
     ImageView pausePlay, next, prev, music;
+
+    VideoView video;
     ArrayList<ModelAudio> songsList;
     ModelAudio currentSong;
     MediaPlayer mediaPlayer = MyMediaPlayer.getInstance();
@@ -39,6 +43,10 @@ public class MusicPlayerActivity extends AppCompatActivity {
         music = findViewById(R.id.music_icon_player);
         title.setSelected(true);
         songsList =(ArrayList<ModelAudio>) getIntent().getSerializableExtra("LIST");
+        video = findViewById(R.id.music_player_video);
+        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.video_play;
+        Uri uri = Uri.parse(videoPath);
+        video.setVideoURI(uri);
 
         setResourcesWithMusic();
         MusicPlayerActivity.this.runOnUiThread(new Runnable() {
@@ -52,11 +60,15 @@ public class MusicPlayerActivity extends AppCompatActivity {
                     if (mediaPlayer.isPlaying()) {
                         pausePlay.setImageResource(R.drawable.baseline_pause_24);
                         music.setRotation(x++);
+                        video.start();
+                        video.requestFocus();
+                        video.setOnPreparedListener (mp -> mp.setLooping(true));
 
                     }else{
                         pausePlay.setImageResource(R.drawable.baseline_play_arrow_24);
                         music.setRotation(0);
                         x = 0;
+                        video.pause();
                     }
                 }
                 new Handler().postDelayed(this, 100);

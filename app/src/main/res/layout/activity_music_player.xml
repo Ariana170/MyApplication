@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F50057"
+    android:background="#CF9FFF"
     tools:context=".MusicPlayerActivity">
 
     <TextView
@@ -29,6 +29,18 @@
         android:padding="20dp"
         android:layout_above="@id/controls"
         android:id="@+id/music_icon_player"
+        android:visibility="gone"
+        />
+
+    <VideoView
+        android:layout_height="240dp"
+        android:layout_width="300dp"
+        android:layout_centerHorizontal="true"
+        android:padding="100dp"
+        android:layout_above="@id/controls"
+        android:layout_marginBottom="100dp"
+        android:id="@+id/music_player_video"
+        android:src="@raw/video_play"
         />
 
     <RelativeLayout
