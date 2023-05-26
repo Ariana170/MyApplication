@@ -21,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class ProfileC extends AppCompatActivity {
 
     GoogleSignInOptions gso;
+    int t;
     GoogleSignInClient gsc;
     Button googlebtn;
     EditText username, password;
