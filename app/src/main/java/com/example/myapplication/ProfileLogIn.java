@@ -33,6 +33,9 @@ public class ProfileLogIn extends AppCompatActivity {
     String nameDB;
     Bitmap imageDB;
 
+    int x;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,12 +71,18 @@ public class ProfileLogIn extends AppCompatActivity {
                 startActivityForResult(iGallery,gallery_req_code);
             }
         });
-        int x = 0;
+
         savepicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                setX(0);
+                int i = 0;
+                ImageView picture = findViewById(R.id.img_gallery);
+                picture.setDrawingCacheEnabled(true);
+                picture.buildDrawingCache();
                 String name = String.format("img%d", x);
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.music);
+
+                Bitmap bitmap = Bitmap.createBitmap(picture.getDrawingCache());
                 ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG,100,byteArray);
 
@@ -82,14 +91,27 @@ public class ProfileLogIn extends AppCompatActivity {
                 boolean insert = DB.insertdata(name, img);
                 if(insert == true){
                     Toast.makeText(ProfileLogIn.this,"DATA SAVED",Toast.LENGTH_SHORT).show();
+                    i++;
+                    setX(i);
                 }else{
                     Toast.makeText(ProfileLogIn.this,"DATA NOT SAVED",Toast.LENGTH_SHORT).show();
                 }
 
                 imageDB = DB.getImage(name);
                 picture.setImageBitmap(imageDB);
+
+
             }
         });
+
+
+    }
+    public void setX(int x){
+        this.x = x;
+    }
+
+    public int getX(){
+        return x;
     }
 
     @Override
